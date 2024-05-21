@@ -1,31 +1,48 @@
-services:
-  backend:
-    build:
-      context: ./backend/
-      dockerfile: Dockerfile
-    ports:
-      - 8080:8080
-    volumes:
-      - ./backend:/app 
-    depends_on:
-      - db
-  frontend:
-    build:
-      context: ./frontend/
-      dockerfile: Dockerfile
-    volumes:
-      - ./frontend:/app
-    ports:
-      - 3000:3000 
-  db:
-    image: "postgres:15-alpine"
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=db
-    volumes:
-      - db-store:/var/lib/postgresql/data
+# services:
+#   backend:
+#     build:
+#       context: ./backend/
+#       dockerfile: Dockerfile
+#     ports:
+#       - 8080:8080
+#     volumes:
+#       - ./backend:/app
+#     depends_on:
+#       - db
+#   frontend:
+#     build:
+#       context: ./frontend/
+#       dockerfile: Dockerfile
+#     volumes:
+#       - ./frontend:/app
+#     ports:
+#       - 3000:3000
+#   db:
+#     image: "postgres:15-alpine"
+#     ports:
+#       - "5432:5432"
+#     environment:
+#       - POSTGRES_PASSWORD=password
+#       - POSTGRES_DB=db
+#     volumes:
+#       - db-store:/var/lib/postgresql/data
 
-volumes:
-  db-store:
+# volumes:
+#   db-store:
+
+version: "3.8"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"

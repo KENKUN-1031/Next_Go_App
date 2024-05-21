@@ -6,21 +6,50 @@
 //   );
 // }
 
-type User = {
+"use client";
+
+import { useEffect, useState } from "react";
+
+interface ApiResponse {
   message: string;
-};
+}
 
-const fetchUser = async (path: string): Promise<User> => {
-  const response = await fetch(path);
-  const data = await response.json();
+export default function Home() {
+  const [data, setData] = useState<ApiResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  return {
-    message: data.message
-  };
-};
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result: ApiResponse = await response.json();
+        setData(result);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError(String(error));
+        }
+      }
+    };
 
-export default async function Home() {
-  const user = await fetchUser("http://localhost:8080/");
+    fetchData();
+  }, []);
 
-  return <p>{user.message}</p>
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>{data.message}</h1>
+    </div>
+  );
 }
