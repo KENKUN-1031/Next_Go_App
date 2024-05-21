@@ -1,42 +1,36 @@
 # # ベースイメージを指定
-# FROM golang:latest
+# FROM golang:1.18-alpine
 
-# # コンテナ内の作業ディレクトリを設定
+# # 作業ディレクトリを設定
 # WORKDIR /app
 
-# # ローカルのソースコードをコンテナにコピー
+# # ソースコードをコピー
 # COPY . .
 
-# # 必要なパッケージをインストール
+# # 依存関係をインストール
 # RUN go mod download
 
 # # アプリケーションをビルド
 # RUN go build -o main .
 
-# # 公開予定のコンテナのポートを明示
+# # ポート番号を指定
 # EXPOSE 8080
 
-# # アプリケーションを実行
-# CMD ["go", "run", "main.go"]
+# # アプリケーションを起動
+# CMD ["./main"]
 
 
-# ベースイメージを指定
-FROM golang:1.18-alpine
+# Dockerfile.backend
+FROM golang:1.20-alpine
 
-# 作業ディレクトリを設定
+# Airのインストール
+RUN apk add --no-cache git curl && \
+    curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s
+
 WORKDIR /app
 
-# ソースコードをコピー
 COPY . .
 
-# 依存関係をインストール
-RUN go mod download
+RUN go mod tidy
 
-# アプリケーションをビルド
-RUN go build -o main .
-
-# ポート番号を指定
-EXPOSE 8080
-
-# アプリケーションを起動
-CMD ["./main"]
+CMD ["air"]
