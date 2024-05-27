@@ -31,7 +31,7 @@ jobs:
 
       - run:
           name: Run Tests
-          command: docker-compose exec frontend npm run test
+          command: docker-compose up --build
 
       - run:
           name: Stop and Cleanup
