@@ -1,11 +1,3 @@
-// import Image from "next/image";
-
-// export default function Home() {
-//   return (
-//     <h1>test</h1>
-//   );
-// }
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -56,7 +48,7 @@ export default function Home() {
       <h1 onClick={handleIncremment}>+</h1>
       <h1 onClick={handleMinus}>-</h1>
       <h2>{count}</h2>
-      <h1>superTestHelloYay</h1>
+      <h1>circleCI</h1>
     </div>
   );
 }
