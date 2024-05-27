@@ -22,16 +22,12 @@ jobs:
           command: docker-compose --version
 
       - run:
-          name: List Files
-          command: ls -la
-
-      - run:
           name: Build and Run Services
-          command: docker-compose -f compose.yml up --build -d
+          command: docker-compose -f ../docker-compose.yml up --build -d
 
       - run:
           name: Run Tests
-          command: docker-compose up --build
+          command: docker-compose exec frontend npm run test
 
       - run:
           name: Stop and Cleanup
