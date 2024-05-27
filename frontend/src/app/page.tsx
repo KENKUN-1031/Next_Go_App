@@ -9,6 +9,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useUser } from './hooks/useUser';
 
 interface ApiResponse {
   message: string;
@@ -17,6 +18,8 @@ interface ApiResponse {
 export default function Home() {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  //userUserからインポート
+  const {count, handleIncremment, handleMinus} = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +53,10 @@ export default function Home() {
   return (
     <div>
       <h1>{data.message}</h1>
+      <h1 onClick={handleIncremment}>+</h1>
+      <h1 onClick={handleMinus}>-</h1>
+      <h2>{count}</h2>
+      <h1>superTestHelloYay</h1>
     </div>
   );
 }
