@@ -23,7 +23,7 @@ jobs:
 
       - run:
           name: Build and Run Services
-          command: docker-compose -f docker-compose.yml up --build -d
+          command: docker-compose -f ../docker-compose.yml up --build -d
 
       - run:
           name: Run Tests
