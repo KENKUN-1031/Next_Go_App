@@ -23,7 +23,7 @@ jobs:
 
       - run:
         name: List Files
-        commands: ls -la
+        command: ls -la
 
       - run:
           name: Build and Run Services
