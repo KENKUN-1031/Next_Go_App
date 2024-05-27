@@ -22,6 +22,10 @@ jobs:
           command: docker-compose --version
 
       - run:
+        name: List Files
+        commands: ls -la
+
+      - run:
           name: Build and Run Services
           command: docker-compose -f ../docker-compose.yml up --build -d
 
