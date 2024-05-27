@@ -22,8 +22,8 @@ jobs:
           command: docker-compose --version
 
       - run:
-        name: List Files
-        command: ls -la
+          name: List Files
+          command: ls -la
 
       - run:
           name: Build and Run Services
